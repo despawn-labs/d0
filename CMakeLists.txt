@@ -30,15 +30,18 @@ set(
 
     "include/d0/defs.h"
 
-    "src/platform/memory.cc" "src/platform/win32_memory.cc" "include/d0/platform/memory.h"
+    "src/sys/memory.cc" "src/sys/win32_memory.cc" "include/d0/sys/memory.h"
 
-    "src/detour/detour.cc" "include/d0/detour/detour.h"
-    "src/detour/dynamic_detour.cc" "include/d0/detour/dynamic_detour.h"
-    "src/detour/virtual_detour.cc" "include/d0/detour/virtual_detour.h"
-    include/d0/utility/bit_map.h
-    src/utility/bit_map.cc
-    include/d0/utility/runtime_exception.h
-    src/utility/runtime_exception.cc
+    "src/hook/detour.cc" "include/d0/hook/detour.h"
+    "src/hook/dynamic_detour.cc" "include/d0/hook/dynamic_detour.h"
+    "src/hook/virtual_detour.cc" "include/d0/hook/virtual_detour.h"
+
+    "src/std/runtime_exception.cc" "include/d0/std/runtime_exception.h"
+
+    "src/std/block_allocator.cc" "include/d0/std/block_allocator.h"
+
+    "src/std/bit_map.cc" "include/d0/std/bit_map.h"
+    include/d0/std/near_allocator.h
 )
 
 add_library(
@@ -85,8 +88,10 @@ endif ()
 set(
     D0_TEST_SRC
 
-    "src/platform/win32_memory_test.cc"
-    src/utility/bit_map_test.cc
+    "src/sys/win32_memory_test.cc"
+
+    "src/std/bit_map_test.cc"
+    "src/std/block_allocator_test.cc"
 )
 
 add_executable(

@@ -1,4 +1,4 @@
-#include <d0/detour/dynamic_detour.h>
+#include <d0/hook/dynamic_detour.h>
 
 #include <iostream>
 #include <string>

@@ -6,7 +6,7 @@ namespace d0 {
 
 class BitMap {
 public:
-  BitMap(usize size);
+  explicit BitMap(usize size);
   ~BitMap();
 
   BitMap(const BitMap &other);
@@ -15,7 +15,7 @@ public:
   void Resize(usize size);
 
   void Set(usize index, bool value) const;
-  bool Get(usize index) const;
+  [[nodiscard]] bool Get(usize index) const;
 
 private:
   usize size_;

@@ -1,6 +1,7 @@
-#include "d0/utility/bit_map.h"
-#include "d0/utility/runtime_exception.h"
+#include "d0/std/bit_map.h"
+#include "d0/std/runtime_exception.h"
 
+#include <cmath>
 #include <memory>
 
 namespace d0 {
@@ -8,7 +9,7 @@ namespace d0 {
 constexpr auto kBitMapDataBytes = sizeof(usize);
 constexpr auto kBitMapDataBits = kBitMapDataBytes * 8;
 
-BitMap::BitMap(usize size) : size_{0}, n_data_{0}, data_{nullptr} {
+BitMap::BitMap(const usize size) : size_{0}, n_data_{0}, data_{nullptr} {
   Resize(size);
 }
 
@@ -68,7 +69,7 @@ void BitMap::Set(const usize index, const bool value) const {
     data_[data_index] &= ~(1 << index % kBitMapDataBits);
 }
 
-bool BitMap::Get(usize index) const {
+bool BitMap::Get(const usize index) const {
   const usize data_index = index / kBitMapDataBits;
   if (data_index >= size_)
     throw RuntimeException("index exceeds size of bitmap");
