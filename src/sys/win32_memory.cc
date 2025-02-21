@@ -2,7 +2,7 @@
 
 #include <Windows.h>
 
-namespace d0 {
+namespace d0::sys {
 
 D0_API void PageProtection::FromPlatform(const uint32_t in) {
   value = 0;
@@ -84,4 +84,4 @@ D0_API void FreePage(const uptr address) {
   VirtualFree(reinterpret_cast<LPVOID>(address), GetPageSize(), MEM_RELEASE);
 }
 
-} // namespace d0
+} // namespace d0::sys

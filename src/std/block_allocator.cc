@@ -81,6 +81,13 @@ bool BlockAllocator::CanAllocate(const usize size) const {
   return FindFreeBlock(block_size, block_index);
 }
 
+usize BlockAllocator::GetAllocationCount() const {
+  auto c = 0;
+  for (const auto &size : allocations_)
+    c += size != 0 ? 1 : 0;
+  return c;
+}
+
 usize BlockAllocator::FindSmallestBlock(const usize size) const {
   usize n = 1;
 

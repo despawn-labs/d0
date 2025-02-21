@@ -6,9 +6,9 @@
 using namespace d0;
 
 TEST(BlockAllocator, Allocate) {
-  const auto region = AllocatePage(0);
-  BlockAllocator alloc{region, GetPageSize(), 8};
+  const auto region = sys::AllocatePage(0);
+  BlockAllocator alloc{region, sys::GetPageSize(), 8};
   alloc.Allocate(8);
 
-  FreePage(region);
+  sys::FreePage(region);
 }

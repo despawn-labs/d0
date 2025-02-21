@@ -2,7 +2,7 @@
 
 #include "d0/defs.h"
 
-namespace d0 {
+namespace d0::sys {
 
 /// Represents the protection level of a given memory page.
 struct D0_API PageProtection {
@@ -23,13 +23,13 @@ struct D0_API PageProtection {
   }
 
   /// Sets the "read" flag.
-  void SetRead(bool enabled = true) { Set<kRead>(enabled); }
+  void SetRead(const bool enabled = true) { Set<kRead>(enabled); }
 
   /// Sets the "write" flag.
-  void SetWrite(bool enabled = true) { Set<kWrite>(enabled); }
+  void SetWrite(const bool enabled = true) { Set<kWrite>(enabled); }
 
   /// Sets the "execute" flag.
-  void SetExecute(bool enabled = true) { Set<kExecute>(enabled); }
+  void SetExecute(const bool enabled = true) { Set<kExecute>(enabled); }
 
   /// Gets the given flag value.
   template <uint8_t Flag> [[nodiscard]] bool Get() const {
@@ -87,4 +87,4 @@ D0_API uptr AllocatePage(uptr address);
 /// @param address The address of the page.
 D0_API void FreePage(uptr address);
 
-} // namespace d0
+} // namespace d0::sys

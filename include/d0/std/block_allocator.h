@@ -18,6 +18,8 @@ public:
 
   bool CanAllocate(usize size) const;
 
+  usize GetAllocationCount() const;
+
 private:
   [[nodiscard]] usize FindSmallestBlock(usize size) const;
   bool FindFreeBlock(usize block_size, usize &index) const;

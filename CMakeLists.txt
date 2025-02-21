@@ -20,6 +20,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_C_STANDARD 11)
 
+option(ZYDIS_BUILD_TOOLS "" ON)
+
 add_subdirectory("vendor/googletest")
 add_subdirectory("vendor/zydis")
 
@@ -32,16 +34,14 @@ set(
 
     "src/sys/memory.cc" "src/sys/win32_memory.cc" "include/d0/sys/memory.h"
 
-    "src/hook/detour.cc" "include/d0/hook/detour.h"
-    "src/hook/dynamic_detour.cc" "include/d0/hook/dynamic_detour.h"
-    "src/hook/virtual_detour.cc" "include/d0/hook/virtual_detour.h"
+    "src/detour/detour.cc" "include/d0/detour/detour.h"
+    "src/detour/dynamic_detour.cc" "include/d0/detour/dynamic_detour.h"
+    "src/detour/virtual_detour.cc" "include/d0/detour/virtual_detour.h"
 
     "src/std/runtime_exception.cc" "include/d0/std/runtime_exception.h"
-
     "src/std/block_allocator.cc" "include/d0/std/block_allocator.h"
-
     "src/std/bit_map.cc" "include/d0/std/bit_map.h"
-    include/d0/std/near_allocator.h
+    "src/std/near_allocator.cc" "include/d0/std/near_allocator.h"
 )
 
 add_library(

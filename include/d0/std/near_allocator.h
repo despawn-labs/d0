@@ -2,6 +2,7 @@
 
 #include "d0/std/block_allocator.h"
 
+#include <memory>
 #include <map>
 
 namespace d0 {
@@ -11,6 +12,9 @@ namespace d0 {
 /// Internally, this class manages a list of page-ranged [`BlockAllocator`]s.
 /// These are responsible for performing the actual allocations, while this
 /// class is responsible for dispatching calls to the appropriate allocators.
+///
+/// Generally, you shouldn't need to instantiate a new [`NearAllocator`], since
+/// a global one is provided to make page sharing a possibility.
 class NearAllocator {
 public:
   /// NearAllocator constructor.
@@ -30,9 +34,11 @@ public:
   void Free(uptr addr);
 
 private:
-  std::map<uptr, BlockAllocator> allocs_;
+  std::map<uptr, std::shared_ptr<BlockAllocator>> allocators_;
 };
 
-extern NearAllocator g_near_allocator;
+uptr AllocateNear(uptr near, usize size);
+
+void FreeNear(uptr addr);
 
 } // namespace d0
