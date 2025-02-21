@@ -1,7 +1,6 @@
-#include "d0/std/bit_map.h"
-#include "d0/std/runtime_exception.h"
+#include "d0/data/bit_map.h"
+#include "d0/misc/runtime_exception.h"
 
-#include <cmath>
 #include <memory>
 
 namespace d0 {

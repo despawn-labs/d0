@@ -1,7 +1,7 @@
 #pragma once
 
 #include "d0/defs.h"
-#include "d0/std/bit_map.h"
+#include "d0/data/bit_map.h"
 
 #include <vector>
 

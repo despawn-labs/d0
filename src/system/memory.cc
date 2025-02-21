@@ -1,6 +1,6 @@
-#include "d0/sys/memory.h"
+#include "d0/system/memory.h"
 
-namespace d0::sys {
+namespace d0 {
 
 PageProtection::PageProtection(uint8_t value) : value(value) {}
 

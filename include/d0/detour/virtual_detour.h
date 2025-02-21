@@ -3,7 +3,7 @@
 #include "d0/defs.h"
 #include "d0/detour/detour.h"
 
-namespace d0::detour {
+namespace d0 {
 
 class VirtualDetourBase : public Detour {
 public:

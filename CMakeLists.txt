@@ -32,16 +32,19 @@ set(
 
     "include/d0/defs.h"
 
-    "src/sys/memory.cc" "src/sys/win32_memory.cc" "include/d0/sys/memory.h"
+    "src/system/memory.cc" "src/system/win32_memory.cc" "include/d0/system/memory.h"
 
     "src/detour/detour.cc" "include/d0/detour/detour.h"
     "src/detour/dynamic_detour.cc" "include/d0/detour/dynamic_detour.h"
     "src/detour/virtual_detour.cc" "include/d0/detour/virtual_detour.h"
 
-    "src/std/runtime_exception.cc" "include/d0/std/runtime_exception.h"
-    "src/std/block_allocator.cc" "include/d0/std/block_allocator.h"
-    "src/std/bit_map.cc" "include/d0/std/bit_map.h"
-    "src/std/near_allocator.cc" "include/d0/std/near_allocator.h"
+    "src/misc/runtime_exception.cc" "include/d0/misc/runtime_exception.h"
+    "src/misc/find_pattern.cc" "include/d0/misc/find_pattern.h"
+
+    "src/data/block_allocator.cc" "include/d0/data/block_allocator.h"
+    "src/data/bit_map.cc" "include/d0/data/bit_map.h"
+    "src/data/near_allocator.cc" "include/d0/data/near_allocator.h"
+    include/d0/d0.h
 )
 
 add_library(
@@ -88,10 +91,11 @@ endif ()
 set(
     D0_TEST_SRC
 
-    "src/sys/win32_memory_test.cc"
+    "src/system/win32_memory_test.cc"
 
-    "src/std/bit_map_test.cc"
-    "src/std/block_allocator_test.cc"
+    "src/data/bit_map_test.cc"
+    "src/data/block_allocator_test.cc"
+    src/misc/find_pattern_test.cc
 )
 
 add_executable(

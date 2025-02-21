@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
-#include <d0/std/bit_map.h>
+#include <d0/data/bit_map.h>
+
 using namespace d0;
 
 TEST(BitMap, Overview) {

@@ -1,6 +1,6 @@
 #include "d0/detour/virtual_detour.h"
 
-namespace d0::detour {
+namespace d0 {
 
 VirtualDetourBase::VirtualDetourBase(uptr target, usize index, uptr detour)
     : target_(0), detour_(detour), slot_(nullptr) {

@@ -2,7 +2,7 @@
 
 #include "d0/defs.h"
 
-namespace d0::sys {
+namespace d0 {
 
 /// Represents the protection level of a given memory page.
 struct D0_API PageProtection {

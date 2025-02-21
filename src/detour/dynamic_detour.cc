@@ -1,18 +1,16 @@
 #include "d0/detour/dynamic_detour.h"
-
-#include "Zydis/Decoder.h"
-#include "Zydis/Disassembler.h"
-#include "Zydis/Encoder.h"
-#include "d0/std/near_allocator.h"
-#include "d0/std/runtime_exception.h"
-#include "d0/sys/memory.h"
+#include "d0/data/near_allocator.h"
+#include "d0/misc/runtime_exception.h"
+#include "d0/system/memory.h"
 
 #include <cstdint>
 #include <list>
 #include <map>
 #include <print>
 
-namespace d0::detour {
+#include <Zydis/Zydis.h>
+
+namespace d0 {
 
 constexpr auto k2GB = 0x7FFFFFFF;
 
@@ -168,20 +166,20 @@ void DynamicDetourBase::Enable() {
 
   EncodeRelativeJump(jmp, static_cast<i32>(relay_ - (target_ + 5)));
 
-  sys::PageProtection rwe{};
+  PageProtection rwe{};
   rwe.SetRead();
   rwe.SetWrite();
   rwe.SetExecute();
 
-  sys::PageProtection old_p_1{};
+  PageProtection old_p_1{};
 
-  const auto page_size = sys::GetPageSize();
+  const auto page_size = GetPageSize();
   const auto page = target_ - (target_ % page_size);
   SetPageProtection(page, rwe, old_p_1);
 
   memcpy(reinterpret_cast<u8 *>(target_), jmp.data(), jmp.size());
 
-  sys::PageProtection old_p_2{};
+  PageProtection old_p_2{};
   SetPageProtection(page, old_p_1, old_p_2);
 
   state_ = State::kEnabled;
@@ -191,21 +189,21 @@ void DynamicDetourBase::Disable() {
   if (state_ == State::kDisabled || state_ == State::kDormant)
     return;
 
-  sys::PageProtection rwe{};
+  PageProtection rwe{};
   rwe.SetRead();
   rwe.SetWrite();
   rwe.SetExecute();
 
-  sys::PageProtection old_p;
+  PageProtection old_p;
 
-  const auto page_size = sys::GetPageSize();
+  const auto page_size = GetPageSize();
   const auto page = target_ - (target_ % page_size);
   SetPageProtection(page, rwe, old_p);
 
   memcpy(reinterpret_cast<u8 *>(target_), instructions_.data(),
          instructions_.size());
 
-  sys::PageProtection old_p_2;
+  PageProtection old_p_2;
   SetPageProtection(page, old_p, old_p_2);
 
   state_ = State::kDisabled;

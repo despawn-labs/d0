@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "d0/std/near_allocator.h"
+#include "d0/data/near_allocator.h"
 
-namespace d0::detour {
+namespace d0 {
 
 /// The base pure-virtual detour class.
 class Detour {

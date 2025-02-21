@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace d0::detour {
+namespace d0 {
 
 /// Base implementation of a trampoline-based detour.
 class D0_API DynamicDetourBase : public Detour {

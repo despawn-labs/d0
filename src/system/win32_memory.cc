@@ -1,8 +1,8 @@
-#include "d0/sys/memory.h"
+#include "d0/system/memory.h"
 
 #include <Windows.h>
 
-namespace d0::sys {
+namespace d0 {
 
 D0_API void PageProtection::FromPlatform(const uint32_t in) {
   value = 0;

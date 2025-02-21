@@ -1,7 +1,7 @@
-#include "d0/std/near_allocator.h"
-
-#include "d0/std/runtime_exception.h"
-#include "d0/sys/memory.h"
+#include "d0/data/near_allocator.h"
+#include "d0/data/block_allocator.h"
+#include "d0/misc/runtime_exception.h"
+#include "d0/system/memory.h"
 
 #include <print>
 
@@ -20,7 +20,7 @@ uptr NearAllocator::Allocate(const uptr near, const usize size) {
     throw RuntimeException("Allocation size must be greater than zero.");
 
   // Search for a free page near the given address.
-  const auto page_size = sys::GetPageSize();
+  const auto page_size = GetPageSize();
 
   const auto start_addr = near - (near % page_size);
   auto i = 1;
@@ -35,8 +35,8 @@ uptr NearAllocator::Allocate(const uptr near, const usize size) {
     if (fwd_addr - start_addr >= k2GB)
       return 0;
 
-    const auto fwd_state = sys::GetPageState(fwd_addr);
-    const auto bck_state = sys::GetPageState(bck_addr);
+    const auto fwd_state = GetPageState(fwd_addr);
+    const auto bck_state = GetPageState(bck_addr);
 
     // Check if an allocator already exists for this page.
     std::shared_ptr<BlockAllocator> allocator{nullptr};
@@ -75,12 +75,12 @@ uptr NearAllocator::Allocate(const uptr near, const usize size) {
     return 0;
 
   // Allocate the page.
-  if (!sys::AllocatePage(page_addr))
+  if (!AllocatePage(page_addr))
     throw RuntimeException("Failed to allocate page at: 0x{:X}", page_addr);
 
   // Create a new allocator for the page.
   const auto allocator = std::make_shared<BlockAllocator>(
-      page_addr, sys::GetPageSize(), kNearAllocatorBlockSize);
+      page_addr, GetPageSize(), kNearAllocatorBlockSize);
 
   // Insert the allocator.
   allocators_[page_addr] = allocator;
@@ -90,7 +90,7 @@ uptr NearAllocator::Allocate(const uptr near, const usize size) {
 }
 
 void NearAllocator::Free(const uptr addr) {
-  const auto page_size = sys::GetPageSize();
+  const auto page_size = GetPageSize();
   const auto page_addr = addr - addr % page_size;
 
   if (!allocators_.contains(page_addr))
@@ -100,7 +100,7 @@ void NearAllocator::Free(const uptr addr) {
   allocator->Free(addr);
 
   if (allocator->GetAllocationCount() == 0) {
-    sys::FreePage(page_addr);
+    FreePage(page_addr);
     allocators_.erase(page_addr);
   }
 }
