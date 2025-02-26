@@ -1,7 +1,8 @@
 #pragma once
 
+#include <fmt/format.h>
+
 #include <chrono>
-#include <format>
 #include <string>
 
 namespace d0 {
@@ -34,8 +35,8 @@ public:
   }
 
   template <typename... Args>
-  void TraceF(const std::format_string<Args...> &format, Args &&...args) {
-    Trace(std::vformat(format, std::make_format_args(args)));
+  void TraceF(const fmt::format_string<Args...> &format, Args &&...args) {
+    Trace(fmt::vformat(format, fmt::make_format_args(args)));
   }
 
   void Debug(const std::string &content) const {
@@ -43,8 +44,8 @@ public:
   }
 
   template <typename... Args>
-  void DebugF(const std::format_string<Args...> &format, Args &&...args) {
-    Debug(std::vformat(format, std::make_format_args(args)));
+  void DebugF(const fmt::format_string<Args...> &format, Args &&...args) {
+    Debug(fmt::vformat(format, fmt::make_format_args(args)));
   }
 
   void Info(const std::string &content) const {
@@ -52,8 +53,8 @@ public:
   }
 
   template <typename... Args>
-  void InfoF(const std::format_string<Args...> &format, Args &&...args) {
-    Info(std::vformat(format, std::make_format_args(args)));
+  void InfoF(const fmt::format_string<Args...> &format, Args &&...args) {
+    Info(fmt::vformat(format, fmt::make_format_args(args)));
   }
 
   void Warn(const std::string &content) const {
@@ -61,8 +62,8 @@ public:
   }
 
   template <typename... Args>
-  void WarnF(const std::format_string<Args...> &format, Args &&...args) {
-    Warn(std::vformat(format, std::make_format_args(args)));
+  void WarnF(const fmt::format_string<Args...> &format, Args &&...args) {
+    Warn(fmt::vformat(format, fmt::make_format_args(args)));
   }
 
   void Error(const std::string &content) const {
@@ -70,8 +71,8 @@ public:
   }
 
   template <typename... Args>
-  void ErrorF(const std::format_string<Args...> &format, Args &&...args) {
-    Error(std::vformat(format, std::make_format_args(args)));
+  void ErrorF(const fmt::format_string<Args...> &format, Args &&...args) {
+    Error(fmt::vformat(format, fmt::make_format_args(args)));
   }
 
 private:

@@ -49,8 +49,8 @@ D0_API PageState GetPageState(uptr address) {
   p.FromPlatform(mbi.Protect);
 
   return {
-      .protection = p,
-      .is_free = mbi.State == MEM_FREE,
+      p,
+      mbi.State == MEM_FREE,
   };
 }
 
@@ -84,4 +84,4 @@ D0_API void FreePage(const uptr address) {
   VirtualFree(reinterpret_cast<LPVOID>(address), GetPageSize(), MEM_RELEASE);
 }
 
-} // namespace d0::sys
+} // namespace d0

@@ -63,7 +63,7 @@ static bool IsRIPRelative(const StolenInstruction &inst, usize &offset,
 }
 
 static bool IsRelativeCall(const StolenInstruction &inst) {
-  return inst.instruction.mnemonic == ZYDIS_MNEMONIC_CALL and
+  return inst.instruction.mnemonic == ZYDIS_MNEMONIC_CALL &&
          inst.data[0] == 0xE8;
 }
 
@@ -226,14 +226,14 @@ static void DisassembleRegion(uptr addr, usize size) {
   while (ZYAN_SUCCESS(
       ZydisDecoderDecodeFull(&decoder, reinterpret_cast<void *>(addr + offset),
                              size - offset, &instruction, operands))) {
-    std::print("{:0X}: ", addr + offset);
+    fmt::print("{:0X}: ", addr + offset);
 
     char buffer[256];
     ZydisFormatterFormatInstruction(&formatter, &instruction, operands,
                                     instruction.operand_count_visible, buffer,
                                     sizeof(buffer), addr + offset, ZYAN_NULL);
 
-    std::println("{}", buffer);
+    fmt::println("{}", buffer);
 
     offset += instruction.length;
   }

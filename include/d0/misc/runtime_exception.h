@@ -1,7 +1,8 @@
 #pragma once
 
+#include <fmt/format.h>
+
 #include <exception>
-#include <format>
 #include <string>
 
 namespace d0 {
@@ -21,7 +22,7 @@ public:
   /// @tparam Args The argument types.
   template <typename... Args>
   explicit RuntimeException(const std::string &format, Args &&...args)
-      : RuntimeException(std::vformat(format, std::make_format_args(args...))) {
+      : RuntimeException(fmt::vformat(format, fmt::make_format_args(args...))) {
   }
 
   /// RuntimeException destructor.

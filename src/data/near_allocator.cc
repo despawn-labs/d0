@@ -42,11 +42,11 @@ uptr NearAllocator::Allocate(const uptr near, const usize size) {
     std::shared_ptr<BlockAllocator> allocator{nullptr};
 
     // Check if the given allocator is available.
-    if (allocators_.contains(fwd_addr))
+    if (allocators_.find(fwd_addr) != allocators_.end())
       if (const auto fwd_allocator = allocators_.at(fwd_addr);
           fwd_allocator->CanAllocate(size))
         allocator = fwd_allocator;
-      else if (allocators_.contains(bck_addr))
+      else if (allocators_.find(bck_addr) != allocators_.end())
         if (const auto bck_allocator = allocators_.at(fwd_addr);
             bck_allocator->CanAllocate(size))
           allocator = bck_allocator;
@@ -93,7 +93,7 @@ void NearAllocator::Free(const uptr addr) {
   const auto page_size = GetPageSize();
   const auto page_addr = addr - addr % page_size;
 
-  if (!allocators_.contains(page_addr))
+  if (allocators_.find(page_addr) == allocators_.end())
     throw RuntimeException("No allocator found for the given address.");
 
   const auto &allocator = allocators_.at(page_addr);

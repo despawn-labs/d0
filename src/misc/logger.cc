@@ -1,6 +1,6 @@
 #include "d0/misc/logger.h"
 
-#include <print>
+#include <fmt/chrono.h>
 
 namespace d0 {
 
@@ -30,15 +30,15 @@ void Logger::Send(const LoggerMessage &message) const {
   if (message.level < level_)
     return;
 
-  std::println("{:%Y-%m-%d %H:%M:%S} | [{}] - {}: {}", message.timestamp,
+  fmt::println("{:%Y-%m-%d %H:%M:%S} | [{}] - {}: {}", message.timestamp,
                context_, LoggerLevelToString(message.level), message.content);
 }
 
 void Logger::Write(const LoggerLevel &level, const std::string &content) const {
   Send(LoggerMessage{
-      .level = level,
-      .content = content,
-      .timestamp = std::chrono::system_clock::now(),
+      level,
+      content,
+      std::chrono::system_clock::now(),
   });
 }
 

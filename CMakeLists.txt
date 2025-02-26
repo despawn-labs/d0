@@ -17,7 +17,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 
 option(ZYDIS_BUILD_TOOLS "" ON)
@@ -30,6 +30,7 @@ add_subdirectory("examples/hello")
 set(
     D0_SRC
 
+    "include/d0/d0.h"
     "include/d0/defs.h"
 
     "src/system/memory.cc" "src/system/win32_memory.cc" "include/d0/system/memory.h"
@@ -44,9 +45,8 @@ set(
     "src/data/block_allocator.cc" "include/d0/data/block_allocator.h"
     "src/data/bit_map.cc" "include/d0/data/bit_map.h"
     "src/data/near_allocator.cc" "include/d0/data/near_allocator.h"
-    include/d0/d0.h
-    include/d0/misc/logger.h
-    src/misc/logger.cc
+
+    "src/misc/logger.cc" "include/d0/misc/logger.h"
 )
 
 add_library(
@@ -61,6 +61,7 @@ target_include_directories(
     d0
 
     PUBLIC "include"
+    PUBLIC "${CMAKE_CURRENT_LIST_DIR}/vendor/fmt/include"
     PRIVATE "src"
 )
 
@@ -73,6 +74,7 @@ target_link_libraries(
 target_compile_definitions(
     d0
 
+    PUBLIC "FMT_UNICODE=0"
     PRIVATE "D0_EXPORT"
 )
 
@@ -94,10 +96,9 @@ set(
     D0_TEST_SRC
 
     "src/system/win32_memory_test.cc"
-
     "src/data/bit_map_test.cc"
     "src/data/block_allocator_test.cc"
-    src/misc/find_pattern_test.cc
+    "src/misc/find_pattern_test.cc"
 )
 
 add_executable(
