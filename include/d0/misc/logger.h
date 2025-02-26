@@ -35,7 +35,7 @@ public:
   }
 
   template <typename... Args>
-  void TraceF(const fmt::format_string<Args...> &format, Args &&...args) {
+  void TraceF(const std::string &format, Args &&...args) {
     Trace(fmt::vformat(format, fmt::make_format_args(args)));
   }
 
@@ -44,7 +44,7 @@ public:
   }
 
   template <typename... Args>
-  void DebugF(const fmt::format_string<Args...> &format, Args &&...args) {
+  void DebugF(const std::string &format, Args &&...args) {
     Debug(fmt::vformat(format, fmt::make_format_args(args)));
   }
 
@@ -53,7 +53,7 @@ public:
   }
 
   template <typename... Args>
-  void InfoF(const fmt::format_string<Args...> &format, Args &&...args) {
+  void InfoF(const std::string &format, Args &&...args) {
     Info(fmt::vformat(format, fmt::make_format_args(args)));
   }
 
@@ -62,7 +62,7 @@ public:
   }
 
   template <typename... Args>
-  void WarnF(const fmt::format_string<Args...> &format, Args &&...args) {
+  void WarnF(const std::string &format, Args &&...args) {
     Warn(fmt::vformat(format, fmt::make_format_args(args)));
   }
 
@@ -71,7 +71,7 @@ public:
   }
 
   template <typename... Args>
-  void ErrorF(const fmt::format_string<Args...> &format, Args &&...args) {
+  void ErrorF(const std::string &format, Args &&...args) {
     Error(fmt::vformat(format, fmt::make_format_args(args)));
   }
 
