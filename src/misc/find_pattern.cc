@@ -1,7 +1,5 @@
 #include "d0/misc/find_pattern.h"
 
-#include <print>
-
 namespace d0 {
 
 namespace {

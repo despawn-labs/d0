@@ -22,6 +22,7 @@ set(CMAKE_C_STANDARD 11)
 
 option(ZYDIS_BUILD_TOOLS "" ON)
 
+add_subdirectory("vendor/fmt")
 add_subdirectory("vendor/googletest")
 add_subdirectory("vendor/zydis")
 
@@ -61,7 +62,6 @@ target_include_directories(
     d0
 
     PUBLIC "include"
-    PUBLIC "${CMAKE_CURRENT_LIST_DIR}/vendor/fmt/include"
     PRIVATE "src"
 )
 
@@ -69,6 +69,7 @@ target_link_libraries(
     d0
 
     Zydis
+    fmt::fmt
 )
 
 target_compile_definitions(
