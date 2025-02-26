@@ -45,6 +45,8 @@ set(
     "src/data/bit_map.cc" "include/d0/data/bit_map.h"
     "src/data/near_allocator.cc" "include/d0/data/near_allocator.h"
     include/d0/d0.h
+    include/d0/misc/logger.h
+    src/misc/logger.cc
 )
 
 add_library(
