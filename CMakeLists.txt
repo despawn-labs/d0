@@ -34,7 +34,8 @@ set(
     "include/d0/d0.h"
     "include/d0/defs.h"
 
-    "src/system/memory.cc" "src/system/win32_memory.cc" "include/d0/system/memory.h"
+    "src/system/memory.cc" "$<$<PLATFORM_ID:Windows>:src/system/win32_memory.cc>" "include/d0/system/memory.h"
+    "src/system/library.cc" "$<$<PLATFORM_ID:Windows>:src/system/win32_library.cc>" "include/d0/system/library.h"
 
     "src/detour/detour.cc" "include/d0/detour/detour.h"
     "src/detour/dynamic_detour.cc" "include/d0/detour/dynamic_detour.h"
@@ -48,6 +49,8 @@ set(
     "src/data/near_allocator.cc" "include/d0/data/near_allocator.h"
 
     "src/misc/logger.cc" "include/d0/misc/logger.h"
+    include/d0/misc/result.h
+    include/d0/misc/error.h
 )
 
 add_library(
@@ -100,6 +103,7 @@ set(
     "src/data/bit_map_test.cc"
     "src/data/block_allocator_test.cc"
     "src/misc/find_pattern_test.cc"
+    src/misc/result_test.cc
 )
 
 add_executable(
