@@ -41,9 +41,9 @@ D0_API uint32_t PageProtection::ToPlatform() const {
                                    : PAGE_READONLY;
 }
 
-D0_API PageState GetPageState(uptr address) {
+D0_API PageState GetPageState(const uptr address) {
   MEMORY_BASIC_INFORMATION mbi{};
-  VirtualQuery((void *)address, &mbi, sizeof(mbi));
+  VirtualQuery(reinterpret_cast<void *>(address), &mbi, sizeof(mbi));
 
   PageProtection p{};
   p.FromPlatform(mbi.Protect);
@@ -54,11 +54,11 @@ D0_API PageState GetPageState(uptr address) {
   };
 }
 
-D0_API PageProtection GetPageProtection(uintptr_t address) {
+D0_API PageProtection GetPageProtection(const uintptr_t address) {
   return GetPageState(address).protection;
 }
 
-D0_API void SetPageProtection(uintptr_t address,
+D0_API void SetPageProtection(const uintptr_t address,
                               const PageProtection &protection,
                               PageProtection &old_protection) {
   uint32_t old_p;
@@ -82,6 +82,24 @@ D0_API uptr AllocatePage(const uptr address) {
 
 D0_API void FreePage(const uptr address) {
   VirtualFree(reinterpret_cast<LPVOID>(address), GetPageSize(), MEM_RELEASE);
+}
+
+D0_API result<void, MemoryError> WriteMemory(const uptr address, const u8 *in,
+                                             const usize n_in,
+                                             usize &n_written) {
+  if (!WriteProcessMemory(GetCurrentProcess(),
+                          reinterpret_cast<LPVOID>(address), in, n_in,
+                          &n_written))
+    return fail(MemoryError::kWrite);
+  return {};
+}
+
+D0_API result<void, MemoryError> ReadMemory(const uptr address, u8 *out,
+                                            const usize n_out, usize &n_read) {
+  if (!ReadProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address),
+                         out, n_out, &n_read))
+    return fail(MemoryError::kRead);
+  return {};
 }
 
 } // namespace d0

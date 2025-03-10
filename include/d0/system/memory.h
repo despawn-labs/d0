@@ -1,8 +1,19 @@
+///
+/// Provides a cross-platform interface for working with
+///
+
 #pragma once
 
 #include "d0/defs.h"
 
+#include <result.hpp>
+
 namespace d0 {
+
+enum class D0_API MemoryError {
+  kWrite,
+  kRead,
+};
 
 /// Represents the protection level of a given memory page.
 struct D0_API PageProtection {
@@ -87,4 +98,20 @@ D0_API uptr AllocatePage(uptr address);
 /// @param address The address of the page.
 D0_API void FreePage(uptr address);
 
-} // namespace d0::sys
+/// Writes to memory at the given address.
+/// @param address The address to write to.
+/// @param in The buffer of contents to write.
+/// @param n_in The length of the buffer.
+/// @param n_written The number of bytes written.
+D0_API result<void, MemoryError> WriteMemory(uptr address, const u8 *in,
+                                             usize n_in, usize &n_written);
+
+/// Reads memory at the given address.
+/// @param address The address to read from.
+/// @param out The buffer to read to.
+/// @param n_out The length of the buffer.
+/// @param n_read The number of bytes read.
+D0_API result<void, MemoryError> ReadMemory(uptr address, u8 *out, usize n_out,
+                                            usize &n_read);
+
+} // namespace d0

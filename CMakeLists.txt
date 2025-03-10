@@ -25,6 +25,7 @@ option(ZYDIS_BUILD_TOOLS "" ON)
 add_subdirectory("vendor/fmt")
 add_subdirectory("vendor/googletest")
 add_subdirectory("vendor/zydis")
+add_subdirectory("vendor/result")
 
 add_subdirectory("examples/hello")
 
@@ -49,8 +50,6 @@ set(
     "src/data/near_allocator.cc" "include/d0/data/near_allocator.h"
 
     "src/misc/logger.cc" "include/d0/misc/logger.h"
-    include/d0/misc/result.h
-    include/d0/misc/error.h
 )
 
 add_library(
@@ -73,12 +72,13 @@ target_link_libraries(
 
     Zydis
     fmt::fmt
+    Result::Result
 )
 
 target_compile_definitions(
     d0
 
-    PUBLIC "FMT_UNICODE=0"
+    PUBLIC "FMT_UNICODE=0" "RESULT_NAMESPACE=d0"
     PRIVATE "D0_EXPORT"
 )
 
@@ -103,7 +103,6 @@ set(
     "src/data/bit_map_test.cc"
     "src/data/block_allocator_test.cc"
     "src/misc/find_pattern_test.cc"
-    src/misc/result_test.cc
 )
 
 add_executable(

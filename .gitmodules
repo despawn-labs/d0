@@ -7,3 +7,6 @@
 [submodule "vendor/fmt"]
 	path = vendor/fmt
 	url = git@github.com:fmtlib/fmt.git
+[submodule "vendor/result"]
+	path = vendor/result
+	url = git@github.com:bitwizeshift/result.git
